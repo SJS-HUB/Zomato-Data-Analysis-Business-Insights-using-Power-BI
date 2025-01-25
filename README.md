@@ -1,0 +1,2 @@
+# Zomato-Data-Analysis-Business-Insights-using-Power-BI
+This project involves Power BI dashboard providing valuable insights into Zomato's business performance across different regions, highlighting key metrics such as restaurant count, average cost, ratings, and city-wise distribution. The insights aim to identify business trends and actionable recommendations for Zomato's strategic decision-making.
