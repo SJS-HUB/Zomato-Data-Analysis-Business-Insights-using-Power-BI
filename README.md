@@ -49,84 +49,29 @@ This document contains all the DAX formulas used in the Power BI Zomato project,
 ### 1. Continent
 ```DAX
 Continent = 
-SWITCH(
-    TRUE(),
-    'Table'[Country] IN {"India", "Pakistan", "Bangladesh"}, "Asia",
-    'Table'[Country] IN {"USA", "Canada"}, "North America",
-    'Table'[Country] IN {"Germany", "UK", "France"}, "Europe",
-    'Table'[Country] IN {"Australia"}, "Australia",
-    'Table'[Country] IN {"Brazil", "Argentina"}, "South America",
-    'Table'[Country] IN {"South Africa", "Nigeria"}, "Africa",
-    "Other"
-)
-```
-
-### 2. Cuisine Count
-```DAX
-Cuisine Count = 
-COUNTROWS(
-    DISTINCT('Table'[Cuisines])
-)
+IF('Zomato India Data'[CountryCode] IN {1, 162, 166, 184, 191, 204, 208, 214}, "Asia",
+IF('Zomato India Data'[CountryCode] IN {14, 148}, "Australia",
+IF('Zomato India Data'[CountryCode] IN {37, 94, 216}, "North America", 
+IF('Zomato India Data'[CountryCode] = 30, "South America",
+IF('Zomato India Data'[CountryCode] = 189, "Africa",
+IF('Zomato India Data'[CountryCode] = 215, "Europe", BLANK()
+))))))
 ```
 
 ## **Measures**
 
-### 1. Restaurant Count
+### 1. Cuisine Count
 ```DAX
-Restaurant Count = 
-DISTINCTCOUNT('Table'[Restaurant Name])
+Cuisine Count = COUNT('Zomato India Data'[Count])
 ```
 
-### 2. Average Cost for Two
+### 2. Restaurant Count
 ```DAX
-Average Cost = 
-AVERAGE('Table'[Cost for Two])
+Restaurant count = COUNT('Zomato India Data'[RestaurantID])
 ```
 
-### 3. Average Rating
-```DAX
-Average Rating = 
-AVERAGE('Table'[Aggregate Rating])
-```
-
-### 4. Total Votes
-```DAX
-Total Votes = 
-SUM('Table'[Votes])
-```
-
-### 5. Top City by Restaurants
-```DAX
-Top City = 
-TOPN(1, VALUES('Table'[City]), [Restaurant Count], DESC)
-```
-
-### 6. Total Number of Chains
-```DAX
-Total Chains = 
-COUNTROWS(
-    DISTINCT('Table'[Restaurant Name])
-)
-```
-
-### 7. Rating Bucket
-```DAX
-Rating Bucket = 
-SWITCH(
-    TRUE(),
-    'Table'[Aggregate Rating] >= 4.5, "Excellent",
-    'Table'[Aggregate Rating] >= 4.0, "Very Good",
-    'Table'[Aggregate Rating] >= 3.5, "Good",
-    'Table'[Aggregate Rating] >= 3.0, "Average",
-    "Below Average"
-)
-```
-
-### 8. Revenue Estimation
-```DAX
-Revenue = 
-[Average Cost] * [Restaurant Count]
-```
+### Additional Features
+- Conditional coloring applied to the ratings column for better visualization.
 
 
 ## 🎨 Dashboard Design
